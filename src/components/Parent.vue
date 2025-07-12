@@ -15,7 +15,7 @@ function addNumbers(n: number){
 </script>
 
 <template>
-	<h1>{{ msg }}</h1>
+	<p>{{ msg }}</p>
 
 	<div class="card">
 
