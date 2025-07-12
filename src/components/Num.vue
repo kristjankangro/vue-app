@@ -1,17 +1,25 @@
 <script setup lang="ts">
-defineProps<{ num: number }>()
+import { defineEmits } from 'vue'
+
+const props = defineProps<{ num: number }>()
+const emit = defineEmits<{ chosen: [number] }>()
 
 function isEven(num: number): boolean {
-  return num % 2 === 0
+	return num % 2 === 0
 }
 
 const classBinding = (n: number) => ({
-  red: isEven(n),
-  blue: !isEven(n)
+	red: isEven(n),
+	blue: !isEven(n)
 })
+
+const click = () => {
+	console.log(props.num);
+	emit("chosen", props.num)
+}
 
 </script>
 
 <template>
-    <div v-bind:class="classBinding(num)">{{ num }}</div>
+	<button v-bind:class="classBinding(num)" v-on:click="click">{{ num }}</button>
 </template>
