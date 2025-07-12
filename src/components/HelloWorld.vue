@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import Num from './Num.vue'
 
 defineProps<{ msg: string }>()
 
 const count = ref(0)
-const numbers = ref([1, 2, 3, 4, 5, 6,8,34,78,99,100])
-const inputValue = ref('user')
+const numbers = ref([1, 2, 3, 4, 5, 6, 8, 34, 78, 99, 100])
+const inputValue = ref(['user'])
 const error = ref('')
 
 // const eventNumbersOnly = numbers.value.filter(isEven)
@@ -15,27 +16,10 @@ function incrementCount() {
   count.value += 1
 }
 
-function isEven(num: number): boolean {
-  return num % 2 === 0
-}
-
-function input(event: Event) {
-  error.value = validateInput(inputValue.value);
-  console.log('Input:', (event.target as HTMLInputElement).value)
-  inputValue.value = (event.target as HTMLInputElement).value
-  console.log('Error:', error.value)
-}
-
-const classBinding = (n: number) => ({
-  red: isEven(n),
-  blue: !isEven(n)
-})
-
-
-function validateInput(val: string): string {
-  if (val.length < 5) {
+function validateInput(): string {
+  if (inputValue.value.length < 5) {
     return 'Input must be at least 5 characters long';
-  } 
+  }
   return '';
 }
 </script>
@@ -44,44 +28,42 @@ function validateInput(val: string): string {
   <h1>{{ msg }}</h1>
 
   <div class="card">
-    <input 
-    v-bind:value="inputValue" v-on:input="input" v-bind:class="{ error: error }" />
+    <!-- <input type="text" v-model="inputValue" v-bind:class="{ error: error }" /> -->
+    <input type="checkbox" v-model="inputValue" value="user" />
+    <input type="checkbox" v-model="inputValue" value="admin" />
+    <input type="checkbox" v-model="inputValue" value="guest" />
     {{ inputValue }}
-    <div class="error">{{ error }}</div>
+
+    <div class="error">{{ validateInput() }}</div>
     <button type="button" @click="incrementCount()">count is {{ count }}</button>
-    
-    <div v-for="n in numbers">
-      <span :key="n" :class="classBinding(n)">{{ n }}<span v-if="isEven(n)">Even</span>
-    <span v-else>Odd</span>
-      </span>
-    </div>
-    
+
+    <!-- f.. nice -->
+    <Num v-for="n in numbers" :num="n"/>
+
   </div>
 
   <p>
     Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
+    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank">create-vue</a>, the official Vue + Vite
+    starter
   </p>
   <p>
     Learn more about IDE Support for Vue in the
-    <a
-      href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support"
-      target="_blank"
-      >Vue Docs Scaling up Guide</a
-    >.
+    <a href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support" target="_blank">Vue Docs Scaling up Guide</a>.
   </p>
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
 <style scoped>
-.red, .error {
+.red,
+.error {
   color: red;
 }
+
 .blue {
   color: blue;
 }
+
 .read-the-docs {
   color: #888;
 }
