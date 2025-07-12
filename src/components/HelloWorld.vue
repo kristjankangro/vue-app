@@ -20,11 +20,7 @@ function isEven(num: number): boolean {
 }
 
 function input(event: Event) {
-  if (inputValue.value.length < 5) {
-    error.value = 'Input must be at least 5 characters long'
-  } else {
-    error.value = ''
-  }
+  error.value = validateInput(inputValue.value);
   console.log('Input:', (event.target as HTMLInputElement).value)
   inputValue.value = (event.target as HTMLInputElement).value
   console.log('Error:', error.value)
@@ -35,6 +31,13 @@ const classBinding = (n: number) => ({
   blue: !isEven(n)
 })
 
+
+function validateInput(val: string): string {
+  if (val.length < 5) {
+    return 'Input must be at least 5 characters long';
+  } 
+  return '';
+}
 </script>
 
 <template>
