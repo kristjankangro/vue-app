@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineEmits } from 'vue'
+import {computed, defineEmits} from 'vue'
 
 const props = defineProps<{ num: number }>()
 const emit = defineEmits<{ chosen: [number] }>()
@@ -8,10 +8,10 @@ function isEven(num: number): boolean {
 	return num % 2 === 0
 }
 
-const classBinding = (n: number) => ({
-	red: isEven(n),
-	blue: !isEven(n)
-})
+const classBinding = computed(() => ({
+	red: isEven(props.num),
+	blue: !isEven(props.num)
+}))
 
 const click = () => {
 	console.log(props.num);
@@ -21,5 +21,5 @@ const click = () => {
 </script>
 
 <template>
-	<button v-bind:class="classBinding(num)" v-on:click="click">{{ num }}</button>
+	<button v-bind:class="classBinding" v-on:click="click">{{ num }}</button>
 </template>
