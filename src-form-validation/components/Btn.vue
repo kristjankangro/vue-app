@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-const props = withDefaults(defineProps<{
+
+const props = defineProps<{
     bg?: string;
     color?: string;
     disabled?: boolean;
     text: string;
-}>(), {
-    disabled: false
-})
+}>()
+
 </script>
 
 <template>
