@@ -1,8 +1,15 @@
-<script setup lang="ts">
+<script lang="ts" setup>
+import {ref} from "vue";
+
+const count = ref<number>(0);
+
+const increment = () => {
+  count.value++;
+};
 </script>
 
 <template>
-	<p>Form validation</p>
+  <button @click="increment">{{ count }}</button>
 </template>
 
 <style scoped>
