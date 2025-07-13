@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {Pokemon} from "./types/Pokemon";
 import {ref} from "vue";
+import card from './components/Card.vue';
 
 const pokemons = ref<Pokemon[] | []>([]);
 const ids = [1, 4, 7];
@@ -29,22 +30,23 @@ console.log("fff");
 
 <template>
   <div class="cards">
-    <div v-for="x in pokemons"
-         :key="x.id"
-         class="card">
-      <div class="title">{{ x.name }}</div>
-      <div class="content">
-        <img :src="x.sprite" alt="Pokemon sprite"/>
-        <p>ID: {{ x.id }}</p>
-      </div>
-      <div class="desc">
-        <div v-for="t in x.types" :key="t">{{ t }}</div>
-      </div>
-    </div>
+    <card v-for="p in pokemons" :key="p.id">
+      <template v-slot:title>{{ p.name }}</template>
+      <template v-slot:content><img :alt="p.name" :src="p.sprite"></template>
+      <template v-slot:desc>
+        <div v-for="t in p.types" :key="t">{{ t }}</div>
+      </template>
+    </card>
   </div>
 </template>
 
 <style scoped>
+img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
 
 .cards {
   display: flex;
@@ -54,44 +56,4 @@ console.log("fff");
   padding: 16px;
 }
 
-.card {
-  width: 155px;
-  height: auto;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 350px) {
-  .card {
-    width: 100%;
-    padding: 8px;
-    border-radius: 4px;
-  }
-}
-
-.title {
-  font-size: 1.5em;
-  font-weight: bold;
-  margin-bottom: 8px;
-  border-bottom: 1px solid #ccc;
-}
-
-.content {
-  font-size: 1em;
-  margin-bottom: 8px;
-}
-
-.desc {
-  font-size: 0.875em;
-  color: #666;
-}
-
-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
 </style>
