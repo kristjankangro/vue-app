@@ -1,19 +1,20 @@
 <script lang="ts" setup>
 import {Pokemon} from "./types/Pokemon";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import card from './components/Card.vue';
 
-const pokemons = ref<Pokemon[] | []>([]);
 const ids = [1, 4, 7];
+const pokemons = ref<Pokemon[] | []>([]);
+const evolutions = ref<Pokemon[] | []>([]);
+const selectedId = ref<number | null>(null);
 
 const apiEndpoint = 'https://pokeapi.co/api/v2/pokemon';
 
-
-const fetchData = async () => {
+const fetchData = async (ids: number[]) => {
   try {
     const responses = await Promise.all(ids.map(id => fetch(`${apiEndpoint}/${id}`)));
     const data = await Promise.all(responses.map(x => x.json()));
-    pokemons.value = data.map((x) => ({
+    return data.map((x) => ({
       id: x.id,
       name: x.name,
       sprite: x.sprites.other['official-artwork'].front_default,
@@ -24,13 +25,31 @@ const fetchData = async () => {
   }
 };
 
-fetchData();
-console.log("fff");
+const fetchEvolutions = async (id: number) => {
+  selectedId.value = id;
+  evolutions.value = await fetchData([id + 1, id + 2])
+};
+
+onMounted(async () => {
+  pokemons.value = await fetchData(ids);
+});
 </script>
 
 <template>
   <div class="cards">
-    <card v-for="p in pokemons" :key="p.id">
+    <card v-for="p in pokemons"
+          :key="p.id"
+          :class="{opace: p.id !== selectedId}"
+          class="card"
+          @click="fetchEvolutions(p.id)">
+      <template v-slot:title>{{ p.name }}</template>
+      <template v-slot:content><img :alt="p.name" :src="p.sprite"></template>
+      <template v-slot:desc>
+        <div v-for="t in p.types" :key="t">{{ t }}</div>
+      </template>
+    </card>
+
+    <card v-for="p in evolutions" :key="p.id">
       <template v-slot:title>{{ p.name }}</template>
       <template v-slot:content><img :alt="p.name" :src="p.sprite"></template>
       <template v-slot:desc>
@@ -41,6 +60,10 @@ console.log("fff");
 </template>
 
 <style scoped>
+.opace {
+  opacity: 0.5;
+}
+
 img {
   width: 100%;
   height: auto;
@@ -54,6 +77,10 @@ img {
   gap: 16px;
   justify-content: center;
   padding: 16px;
+}
+
+.card:hover {
+  opacity: 1;
 }
 
 </style>
