@@ -7,6 +7,7 @@ const ids = [1, 4, 7];
 
 const apiEndpoint = 'https://pokeapi.co/api/v2/pokemon';
 
+
 const fetchData = async () => {
   try {
     const responses = await Promise.all(ids.map(id => fetch(`${apiEndpoint}/${id}`)));
@@ -14,45 +15,60 @@ const fetchData = async () => {
     pokemons.value = data.map((x) => ({
       id: x.id,
       name: x.name,
-      sprite: x.sprites.front_default,
+      sprite: x.sprites.other['official-artwork'].front_default,
       types: x.types.map((type: any) => type.type.name),
     }));
-
-    // const response = await fetch(`${apiEndpoint}/${ids[0]}`);
-    // if (!response.ok) {
-    //   throw new Error('Network response was not ok');
-    // }
-    // const data = await response.json();
-    // pokemon.value = {
-    //   id: data.id,
-    //   name: data.name,
-    //   sprite: data.sprites.front_default,
-    //   types: data.types.map((type: any) => type.type.name),
-    // };
-    console.log(pokemons.value);
   } catch (error) {
     console.error('Fetch error:', error);
   }
 };
+
+fetchData();
+console.log("fff");
 </script>
 
 <template>
-  <div class="card">
-    <div class="title">Title</div>
-    <div class="content">Content</div>
-    <div class="desc">desc</div>
+  <div class="cards">
+    <div v-for="x in pokemons"
+         :key="x.id"
+         class="card">
+      <div class="title">{{ x.name }}</div>
+      <div class="content">
+        <img :src="x.sprite" alt="Pokemon sprite"/>
+        <p>ID: {{ x.id }}</p>
+      </div>
+      <div class="desc">
+        <div v-for="t in x.types" :key="t">{{ t }}</div>
+      </div>
+    </div>
   </div>
-  <button @click="fetchData">fetch</button>
 </template>
 
 <style scoped>
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  padding: 16px;
+}
+
 .card {
-  width: 300px;
-  height: 200px;
+  width: 155px;
+  height: auto;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 350px) {
+  .card {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+  }
 }
 
 .title {
@@ -70,5 +86,12 @@ const fetchData = async () => {
 .desc {
   font-size: 0.875em;
   color: #666;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 </style>
