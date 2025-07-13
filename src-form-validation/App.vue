@@ -1,11 +1,13 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import btn from './components/Btn.vue'
 import inp from './components/Input.vue'
-import { reactive } from 'vue';
+import {computed, reactive} from 'vue';
 import {FormUpdatePayload} from "./types/FormUpdatePayload";
 
+const isValid = computed(() => !formState.username.error && !formState.password.error)
+
 const formState = reactive({
-  valid: true,
+  valid: isValid,
   username: {
     value: 'userr',
     error: '',
@@ -17,25 +19,31 @@ const formState = reactive({
 });
 
 const update = (updatePayload: FormUpdatePayload) => {
-    formState[updatePayload.name].value = updatePayload.value;
-    formState[updatePayload.name].error = updatePayload.error;
+  formState[updatePayload.name].value = updatePayload.value;
+  formState[updatePayload.name].error = updatePayload.error;
 };
+
+const submit = () => {
+  if (formState.valid) {
+    console.log(`Username: ${formState.username.value}, Password: ${formState.password.value}`);
+  } else {
+    console.log('Error: Form is invalid');
+  }
+};
+
 
 </script>
 
 <template>
   <p>Form validation</p>
-  <inp :name="'Username'"
-       :value="formState.username.value"
-       :error="formState.username.error"
-       @update="update"
-       :rules="{required: true, min: 5}"/>
-  <inp :name="'Password'"
-       :value="formState.password.value"
-        :error="formState.password.error"
-       @update="update"
-       :rules="{required: true, min: 8}"/>
-  <btn bg="blue" color="white" :disabled="!formState.valid" text="Click Me"/>
+  <form @submit.prevent="submit">
+    <inp :error="formState.username.error" :name="'Username'" :rules="{required: true, min: 5}"
+         :value="formState.username.value" @update="update"/>
+    <inp :error="formState.password.error" :name="'Password'" :rules="{required: true, min: 8}"
+         :value="formState.password.value" type="password"
+         @update="update"/>
+    <btn :disabled="!formState.valid" bg="blue" color="white" text="Click Me"/>
+  </form>
 </template>
 
 <style scoped></style>

@@ -1,14 +1,17 @@
-<script setup lang="ts">
-import {computed, ref} from "vue";
+<script lang="ts" setup>
+import {computed} from "vue";
 import {Rules} from "../types/ValidationRulesInterface";
 import {FormUpdatePayload} from "../types/FormUpdatePayload";
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   name: string,
   rules: Rules,
   value?: string,
-  error?: string
-}>()
+  error?: string,
+  type?: 'text' | 'password' | 'email' | 'number'
+}>(), {
+  type: 'text'
+})
 
 const emit = defineEmits<{
   (e: 'update', value: any): void;
@@ -36,19 +39,6 @@ const validate = (value: string): string => {
   return '';
 }
 
-// const error = computed(() => {
-//   if (!props.rules) {
-//     return '';
-//   }
-//   if (props.rules.required && !props.value) {
-//     return `Value is required`;
-//   }
-//   if (props.rules.min && props.value.length < props.rules.min) {
-//     return `Value must be at least ${props.rules.min} characters long`;
-//   }
-//   return '';
-// })
-
 const classBinding = computed(() => {
   return {
     'is-invalid': props.error !== ''
@@ -61,10 +51,11 @@ const classBinding = computed(() => {
     <label :for="name">{{ name }}</label>
     <div>
       <input :id="name"
+             :class="classBinding"
              :name="name"
-             :value="value"
-             @input="input"
-             :rules="{}" :class="classBinding"/>
+             :rules="{}"
+             :type="type"
+             :value="value" @input="input"/>
       <div class="error">{{ error }}</div>
     </div>
   </div>
