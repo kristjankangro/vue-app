@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import btn from './components/Btn.vue'
 import inp from './components/Input.vue'
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 
 const valid = ref(false)
-const username = ref('')
+const username = reactive({
+  value: '',
+  valid: false,
+});
+
 </script>
 
 <template>
