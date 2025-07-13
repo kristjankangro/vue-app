@@ -6,7 +6,8 @@ import {FormUpdatePayload} from "../types/FormUpdatePayload";
 const props = defineProps<{
   name: string,
   rules: Rules,
-  value?: string
+  value?: string,
+  error?: string
 }>()
 
 const emit = defineEmits<{
@@ -17,26 +18,40 @@ const input = (event: Event) => {
   const target = event.target as HTMLInputElement;
   emit('update', {
     name: props.name.toLowerCase(),
-    value: target.value
+    value: target.value,
+    error: validate(target.value)
   } as FormUpdatePayload);
 }
 
-const error = computed(() => {
+const validate = (value: string): string => {
   if (!props.rules) {
     return '';
   }
-  if (props.rules.required && !props.value) {
+  if (props.rules.required && !value) {
     return `Value is required`;
   }
-  if (props.rules.min && props.value.length < props.rules.min) {
+  if (props.rules.min && value.length < props.rules.min) {
     return `Value must be at least ${props.rules.min} characters long`;
   }
   return '';
-})
+}
+
+// const error = computed(() => {
+//   if (!props.rules) {
+//     return '';
+//   }
+//   if (props.rules.required && !props.value) {
+//     return `Value is required`;
+//   }
+//   if (props.rules.min && props.value.length < props.rules.min) {
+//     return `Value must be at least ${props.rules.min} characters long`;
+//   }
+//   return '';
+// })
 
 const classBinding = computed(() => {
   return {
-    'is-invalid': error.value !== ''
+    'is-invalid': props.error !== ''
   }
 })
 </script>

@@ -8,26 +8,17 @@ const formState = reactive({
   valid: true,
   username: {
     value: 'userr',
-    valid: false,
+    error: '',
   },
   password: {
     value: 'password123',
-    valid: false,
+    error: '',
   }
 });
-function updateUsername(value: string) {
-  formState.username.value = value;
-  formState.username.valid = value.length >= 5;
-  formState.valid = formState.username.valid;
-}
 
-const update = (value: FormUpdatePayload) => {
-  if (value.name  === 'username') {
-    updateUsername(value.value);
-  } else if (value.name === 'password') {
-    formState.password.value = value.value;
-    formState.password.valid = value.value.length >= 8;
-  }
+const update = (updatePayload: FormUpdatePayload) => {
+    formState[updatePayload.name].value = updatePayload.value;
+    formState[updatePayload.name].error = updatePayload.error;
 };
 
 </script>
@@ -36,10 +27,12 @@ const update = (value: FormUpdatePayload) => {
   <p>Form validation</p>
   <inp :name="'Username'"
        :value="formState.username.value"
+       :error="formState.username.error"
        @update="update"
        :rules="{required: true, min: 5}"/>
   <inp :name="'Password'"
        :value="formState.password.value"
+        :error="formState.password.error"
        @update="update"
        :rules="{required: true, min: 8}"/>
   <btn bg="blue" color="white" :disabled="!formState.valid" text="Click Me"/>
