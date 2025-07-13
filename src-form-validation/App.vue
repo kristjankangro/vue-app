@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import btn from './components/Btn.vue'
 </script>
 
 <template>
 	<p>Form validation</p>
+	<btn bg="blue" color="white" :disabled="false" text="Click Me" />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
