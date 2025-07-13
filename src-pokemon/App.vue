@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import {Pokemon} from "./types/Pokemon";
+import Cards from "./components/Cards.vue";
 import {onMounted, ref} from "vue";
-import card from './components/Card.vue';
 
 const ids = [1, 4, 7];
 const pokemons = ref<Pokemon[] | []>([]);
 const evolutions = ref<Pokemon[] | []>([]);
-const selectedId = ref<number | null>(null);
 
 const apiEndpoint = 'https://pokeapi.co/api/v2/pokemon';
 
@@ -26,7 +25,6 @@ const fetchData = async (ids: number[]) => {
 };
 
 const fetchEvolutions = async (id: number) => {
-  selectedId.value = id;
   evolutions.value = await fetchData([id + 1, id + 2])
 };
 
@@ -36,51 +34,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="cards">
-    <card v-for="p in pokemons"
-          :key="p.id"
-          :class="{opace: p.id !== selectedId}"
-          class="card"
-          @click="fetchEvolutions(p.id)">
-      <template v-slot:title>{{ p.name }}</template>
-      <template v-slot:content><img :alt="p.name" :src="p.sprite"></template>
-      <template v-slot:desc>
-        <div v-for="t in p.types" :key="t">{{ t }}</div>
-      </template>
-    </card>
-
-    <card v-for="p in evolutions" :key="p.id">
-      <template v-slot:title>{{ p.name }}</template>
-      <template v-slot:content><img :alt="p.name" :src="p.sprite"></template>
-      <template v-slot:desc>
-        <div v-for="t in p.types" :key="t">{{ t }}</div>
-      </template>
-    </card>
-  </div>
+  <cards :pokemons="pokemons" @select="fetchEvolutions"/>
+  <cards :pokemons="evolutions"/>
 </template>
 
 <style scoped>
-.opace {
-  opacity: 0.5;
-}
 
-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-}
-
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center;
-  padding: 16px;
-}
-
-.card:hover {
-  opacity: 1;
-}
 
 </style>
