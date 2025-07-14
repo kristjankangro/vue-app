@@ -18,6 +18,15 @@ class Store {
 		return readonly(this._state);
 	}
 
+	get filteredPosts() {
+
+		if (!this._state.currentTag) {
+			return this._state.posts;
+		}
+		return this._state.posts.filter(post =>
+			post.hashtags.some(h => h.includes(this._state.currentTag)));
+	}
+
 	setHashtag(tag: string) {
 		this._state.currentTag = (tag === this._state.currentTag) ? '' : tag;
 	}

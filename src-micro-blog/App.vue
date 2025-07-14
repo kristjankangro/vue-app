@@ -4,19 +4,18 @@ import Card from "../src-pokemon/components/Card.vue";
 import Controls from "./controls.vue";
 import {computed} from "vue";
 
+const currentTag = computed(() => store.state.currentTag);
 
-const filterPosts = computed(() => {
-  if (store.state.currentTag === '') {
-    return store.state.posts;
-  }
-  return store.state.posts.filter(post => post.hashtags.includes(store.state.currentTag));
-})
-
+const setHashtag = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  store.setHashtag(input.value);
+}
+const filteredPosts = computed(() => store.filteredPosts);
 </script>
 
 <template>
-  current tag is: {{ store.state.currentTag }}
-  <card v-for="x in filterPosts" :key="x.id" class="post">
+  <input :value="currentTag" placeholder="Filter by hashtag" @input="setHashtag"/>
+  <card v-for="x in filteredPosts" :key="x.id" class="post">
     <template v-slot:title>{{ x.title }}</template>
     <template v-slot:content>{{ x.content }}</template>
     <template v-slot:desc>
