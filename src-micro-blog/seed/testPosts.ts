@@ -6,14 +6,14 @@ export const testPosts: Post[] = [
 		title: 'First Post',
 		content: 'This is the first post.',
 		likes: 10,
-		hashtags: ['welcome', 'first']
+		hashtags: ['welcome', 'first', 'ts', 'vue', 'micro-blog']
 	},
 	{
 		id: 2,
 		title: 'Second Post',
 		content: 'This is the second post.',
 		likes: 5,
-		hashtags: ['second', 'update']
+		hashtags: ['second', 'update', 'vue', 'micro-blog']
 	},
 	{
 		id: 3,
@@ -27,6 +27,6 @@ export const testPosts: Post[] = [
 		title: 'Fourth Post',
 		content: 'This is the fourth post.',
 		likes: 15,
-		hashtags: ['fourth', 'info']
+		hashtags: ['fourth', 'info', 'comp api']
 	}
 ]

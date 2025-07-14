@@ -4,19 +4,22 @@ import {testPosts} from "../seed/testPosts";
 
 class Store {
 	// We use a private property to hold the reactive state
-	private readonly _state: { posts: Post[] };
+	private readonly _state: { posts: Post[], currentTag: string };
 
 	constructor() {
 		this._state = reactive({
 			posts: testPosts,
+			currentTag: '',
 		});
 	}
-
-	// A public getter provides readonly access to the state.
 
 	// This is a good practice to prevent components from directly changing the state.
 	get state() {
 		return readonly(this._state);
+	}
+
+	setHashtag(tag: string) {
+		this._state.currentTag = (tag === this._state.currentTag) ? '' : tag;
 	}
 
 	// Actions are public methods that can be called to modify the state.

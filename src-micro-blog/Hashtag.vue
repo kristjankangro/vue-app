@@ -1,15 +1,18 @@
 <script lang="ts" setup>
+import {store} from "./store/store";
+
 const props = defineProps<{
   hashtag: string
 }>();
-const setHashtagEmit = defineEmits<{
-  (e: 'setHashtag', hashtag: string): void
-}>();
+
+const setHashtag = () => {
+  store.setHashtag(props.hashtag);
+};
 
 </script>
 
 <template>
-  <div class="hashtag" @click="setHashtagEmit('setHashtag', hashtag)">
+  <div class="hashtag" @click="setHashtag">
     #{{ hashtag }}
   </div>
 </template>

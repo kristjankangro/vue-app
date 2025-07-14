@@ -6,21 +6,12 @@ const props = defineProps<{
   post: Post;
 }>();
 
-const emit = defineEmits<{
-  (e: 'setHashtag', hashtag: string): void;
-}>();
-
-const setHashtag = (hashtag: string) => {
-  emit("setHashtag", hashtag);
-};
-
 </script>
 
 <template>
   <button>Like</button>
   {{ post.likes }}
-  <hashtag v-for="x in post.hashtags" :key="x" :hashtag="x"
-           @setHashtag="setHashtag"/>
+  <hashtag v-for="x in post.hashtags" :key="x" :hashtag="x"/>
 </template>
 
 <style scoped>
