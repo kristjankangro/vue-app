@@ -1,23 +1,18 @@
 <script lang="ts" setup>
-import {computed, reactive, ref} from "vue";
-// reactive is used for objects, ref is used for primitive values
-const count = ref<number>(0);
-const numbers = reactive({a: 0, b: 0})
+import {useNumbers} from "./useNumbers";
+import {usePointer} from '@vueuse/core';
 
-const increment = () => {
-  count.value++;
-};
-const increase = (key: 'a' | 'b') => {
-  numbers[key]++;
-};
+const {x, y} = usePointer();
 
-// Computed property to calculate the total
-const total = computed(() => {
-  return count.value + numbers.a + numbers.b;
-});
+const {count, numbers, increment, increase, total} = useNumbers();
 </script>
 
 <template>
+  <div class="tracker-area">
+    <p>Move your mouse around in this box.</p>
+    <pre>x: {{ x }}, y: {{ y }}</pre>
+  </div>
+
   <button @click="increment">{{ count }}</button>
   <button @click="increase('a')">{{ numbers.a }}</button>
   <button @click="increase('b')">{{ numbers.b }}</button>
@@ -25,4 +20,16 @@ const total = computed(() => {
 </template>
 
 <style scoped>
+.tracker-area {
+  width: 400px;
+  height: 200px;
+  border: 2px dashed #ccc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace;
+  border-radius: 8px;
+}
+
 </style>
