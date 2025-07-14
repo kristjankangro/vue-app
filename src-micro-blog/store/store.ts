@@ -27,6 +27,13 @@ class Store {
 		const newId = this._state.posts.length > 0 ? Math.max(...this._state.posts.map(p => p.id)) + 1 : 1;
 		this._state.posts.push({id: newId, ...post});
 	}
+
+	incrementLikes(post: Post) {
+		let p = this._state.posts.find(p => p.id === post.id);
+		if (!p) return;
+
+		p.likes++;
+	}
 }
 
 // We export a single, shared instance of the store.
