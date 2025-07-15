@@ -1,8 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <router-link to="/">Home</router-link>
-  <router-link to="/hell-no">Hell No</router-link>
+  <router-link to="/hell-no">Hell No World</router-link>
   <router-link to="/posts">Posts</router-link>
   <div>
     <router-view/>
@@ -10,4 +9,16 @@
 
 </template>
 
-<style scoped></style>
+<style scoped>
+
+a {
+  margin-right: 20px;
+  text-decoration: none;
+  color: #42b983;
+}
+
+a.router-link-active {
+  font-weight: bold;
+  color: #35495e;
+}
+</style>
