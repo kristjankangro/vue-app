@@ -1,5 +1,4 @@
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <router-link to="/">Home</router-link>
@@ -11,5 +10,4 @@
 
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
