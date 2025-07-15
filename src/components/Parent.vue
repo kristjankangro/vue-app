@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue'
 import Num from './Num.vue'
 
@@ -7,7 +7,7 @@ defineProps<{ msg: string }>()
 const numbers = ref([1, 2, 3, 4, 5, 6, 8, 34, 78, 99, 100])
 const numbersHistory = ref<number[]>([])
 
-function addNumbers(n: number){
+function addNumbers(n: number) {
 	numbersHistory.value.push(n)
 	console.log(numbersHistory.value);
 }
@@ -20,11 +20,9 @@ function addNumbers(n: number){
 	<div class="card">
 
 		<!-- f.. nice -->
-		<Num v-for="n in numbers" :num="n" 
-		v-on:chosen="addNumbers"
-		/>
-			<hr>
-		<Num v-for="x in numbersHistory" :num="x"/>
+		<Num v-for="n in numbers" :num="n" v-on:chosen="addNumbers" />
+		<hr>
+		<Num v-for="x in numbersHistory" :num="x" />
 
 	</div>
 
@@ -35,7 +33,8 @@ function addNumbers(n: number){
 	</p>
 	<p>
 		Learn more about IDE Support for Vue in the
-		<a href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support" target="_blank">Vue Docs Scaling up Guide</a>.
+		<a href="https://vuejs.org/guide/scaling-up/tooling.html#ide-support" target="_blank">Vue Docs Scaling up
+			Guide</a>.
 	</p>
 	<p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
