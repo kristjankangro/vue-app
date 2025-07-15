@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 
 import {useRoute} from "vue-router";
-import {testPosts} from "../src-micro-blog/seed/testPosts";
 import {computed} from "vue";
+import {testPosts} from "./seed/testPosts";
 
 const route = useRoute();
 
