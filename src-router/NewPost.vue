@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import type {Post} from './types/post';
 import {reactive} from "vue";
-import {getNextId} from "./utils/globalId";
+import {usePosts} from "./usePosts";
 
+const postsStore = usePosts();
 const post = reactive<Post>({
   id: 0,
   title: '',
@@ -10,12 +11,17 @@ const post = reactive<Post>({
 });
 
 const submit = () => {
-  // Here you would typically send the post to your backend or store it in a state management solution
-  console.log('Post submitted:', post);
-  // Reset the form after submission
-  post.id = getNextId(); // Resetting ID to 0 for new post
+  postsStore.addPost(
+      {
+        id: postsStore.posts.value.length + 1,
+        title: post.title,
+        content: post.content
+      }
+  );
   post.title = '';
   post.content = '';
+
+
 };
 </script>
 

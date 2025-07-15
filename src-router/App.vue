@@ -3,7 +3,7 @@
 <template>
   <router-link to="/hell-no">Hell No World</router-link>
   <router-link to="/posts">Posts</router-link>
-  <router-link to="/posts/new">Create Post</router-link>
+  
   <div>
     <router-view/>
   </div>

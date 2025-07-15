@@ -2,17 +2,14 @@
 
 import {useRoute} from "vue-router";
 import {computed} from "vue";
-import {testPosts} from "./seed/testPosts";
+import {usePosts} from "./usePosts";
 
 const route = useRoute();
-
-console.log('route', route);
-
-console.log('testPosts', testPosts);
+const postStore = usePosts();
 
 const post = computed(() => {
   const postId = parseInt(route.params.id as string);
-  return testPosts.find(p => p.id === postId);
+  return postStore.posts.value.find(p => p.id === postId);
 })
 </script>
 

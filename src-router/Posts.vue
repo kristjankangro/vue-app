@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-import {testPosts} from "../src-micro-blog/seed/testPosts";
-import {Post} from "../src-micro-blog/types/post";
 import {useRoute} from "vue-router";
+import {usePosts} from "./usePosts";
 
 const route = useRoute();
+const postStore = usePosts();
 </script>
 
 <template>
-  <ul v-if="route.path === '/posts'" class="posts-list">
-    <li v-for="x in testPosts as Post[]" :key="x.id">
+  <router-link to="/posts/new">Create Post</router-link>
+  <ul class="posts-list">
+    <li v-for="x in postStore.posts.value" :key="x.id">
       <router-link :to="`/posts/${x.id}`">{{ x.title }}</router-link>
     </li>
   </ul>
