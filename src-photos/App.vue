@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import Layout from "./Layout.vue";
 import {computed, onMounted} from "vue";
-import {useAlbumsStore} from "./albums";
+import AlbumComponent from "./albums/AlbumComponent.vue";
+import {useAlbumsStore} from "./albums/albumStore";
 
 const albumsStore = useAlbumsStore();
 
@@ -24,11 +25,11 @@ onMounted(
     <template v-slot:side-menu>
       <nav>
         <h1>Albums</h1>
-        <ul>
-          <li v-for="album in albums" :key="album.id" class="menu-item">
-            {{ album.title }}
-          </li>
-        </ul>
+        <album-component
+            v-for="album in albums"
+            :key="album.id"
+            :album="album"
+            class="menu-item"/>
       </nav>
       <!--      <div v-for="x in albums" :key="x.id">{{ x.title }}</div>-->
     </template>
@@ -42,6 +43,14 @@ onMounted(
 </template>
 
 <style scoped>
+nav {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  height: 100%;
+  gap: 5px;
+}
+
 h1 {
   font-size: 18px;
   color: #333;
@@ -52,5 +61,6 @@ h1 {
   cursor: pointer;
   border-bottom: 1px solid #ccc;
   list-style: none;
+  width: 100%;
 }
 </style>

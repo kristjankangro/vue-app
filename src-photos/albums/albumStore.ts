@@ -1,8 +1,9 @@
 import {defineStore} from 'pinia';
+import type {Album} from "./album";
 
 export const useAlbumsStore = defineStore('albums', {
     state: () => ({
-        all: [] as any[]
+        all: [] as Album[]
     }),
     getters: {
         albumCount: (state) => state.all.length,

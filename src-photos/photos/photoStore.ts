@@ -1,8 +1,9 @@
 import {defineStore} from 'pinia';
+import {Photo} from "./photo";
 
 export const usePhotosStore = defineStore('photos', {
     state: () => ({
-        // Add your state properties here
+        all: [] as Photo[],
     }),
     actions: {
         // Define your actions here
