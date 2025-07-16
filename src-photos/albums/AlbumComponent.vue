@@ -2,12 +2,14 @@
 
 import {Album} from "./album";
 import {usePhotosStore} from "../photos/photoStore";
+import {useRouter} from "vue-router";
 
 const photoStore = usePhotosStore();
 const props = defineProps<{
   album: Album;
 }>();
 
+const router = useRouter();
 const click = async () => {
   await photoStore.getByAlbum(props.album.id);
 };
@@ -15,11 +17,11 @@ const click = async () => {
 </script>
 
 <template>
-  <button @click="click">{{ props.album.title }}</button>
+  <router-link :to="`/albums/${props.album.id}`">{{ props.album.title }}</router-link>
 </template>
 
 <style scoped>
-button {
+a {
   width: 100%;
   text-align: left;
   padding: 0.5rem;

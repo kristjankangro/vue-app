@@ -40,7 +40,6 @@ onMounted(
     </template>
     <template v-slot:content>
       <router-view/>
-      
     </template>
   </layout>
 </template>
