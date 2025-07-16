@@ -5,16 +5,18 @@ import {useRoute} from "vue-router";
 
 const route = useRoute();
 const photosStore = usePhotosStore();
+
 const photos = computed(() => {
-  return photosStore.all;
+  return photosStore.getForAlbum(albumId.value);
 });
 const albumId = computed(
     () => Number(route.params.id) || 0
 );
 
 watchEffect(async () => {
-  await photosStore.getByAlbum(albumId.value);
-})
+  await photosStore.fetchBy(albumId.value);
+});
+
 
 </script>
 
