@@ -66,18 +66,4 @@ h1 {
   width: 100%;
 }
 
-.photo-gallery {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.photo-fake {
-  width: 10rem;
-  height: 10rem;
-  word-wrap: anywhere;
-  border: 1px solid silver;
-}
 </style>
