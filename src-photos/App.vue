@@ -1,14 +1,17 @@
 <script lang="ts" setup>
 import Layout from "./Layout.vue";
-import {onMounted, ref} from "vue";
+import {computed, onMounted} from "vue";
+import {useAlbumsStore} from "./albums";
 
-const albums = ref([]);
+const albumsStore = useAlbumsStore();
+
+const albums = computed(() => {
+  return albumsStore.all;
+});
 
 onMounted(
     async () => {
-
-      const res = await fetch("https://jsonplaceholder.typicode.com/albums");
-      albums.value = await res.json();
+      await albumsStore.fetch();
     }
 )
 </script>
