@@ -3,12 +3,18 @@ import Layout from "./Layout.vue";
 import {computed, onMounted} from "vue";
 import AlbumComponent from "./albums/AlbumComponent.vue";
 import {useAlbumsStore} from "./albums/albumStore";
+import {usePhotosStore} from "./photos/photoStore";
 
 const albumsStore = useAlbumsStore();
-
 const albums = computed(() => {
   return albumsStore.all;
 });
+
+const photosStore = usePhotosStore();
+const photos = computed(() => {
+  return photosStore.all;
+});
+
 
 onMounted(
     async () => {
@@ -31,12 +37,14 @@ onMounted(
             :album="album"
             class="menu-item"/>
       </nav>
-      <!--      <div v-for="x in albums" :key="x.id">{{ x.title }}</div>-->
     </template>
     <template v-slot:content>
       <div class="photo-gallery">
-        <!-- Photo gallery content goes here -->
-        <p>Welcome to the photo gallery!</p>
+        <div v-for="x in photos" :key="x.id"
+             class="photo-fake">
+          {{ x.url }}
+          {{ x.albumId }}
+        </div>
       </div>
     </template>
   </layout>
@@ -62,5 +70,20 @@ h1 {
   border-bottom: 1px solid #ccc;
   list-style: none;
   width: 100%;
+}
+
+.photo-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.photo-fake {
+  width: 10rem;
+  height: 10rem;
+  word-wrap: anywhere;
+  border: 1px solid silver;
 }
 </style>

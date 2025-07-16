@@ -1,15 +1,21 @@
 <script lang="ts" setup>
 
 import {Album} from "./album";
+import {usePhotosStore} from "../photos/photoStore";
 
+const photoStore = usePhotosStore();
 const props = defineProps<{
   album: Album;
 }>();
 
+const click = async () => {
+  await photoStore.getByAlbum(props.album.id);
+};
+
 </script>
 
 <template>
-  <button @click="">{{ props.album.title }}</button>
+  <button @click="click">{{ props.album.title }}</button>
 </template>
 
 <style scoped>

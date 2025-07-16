@@ -10,7 +10,7 @@ export const useAlbumsStore = defineStore('albums', {
     },
     actions: {
         async fetch() {
-            const res = await fetch("https://jsonplaceholder.typicode.com/albums");
+            const res = await fetch("https://jsonplaceholder.typicode.com/albums?_limit=10");
             this.all = await res.json();
         },
         addAlbum(album: string) {
