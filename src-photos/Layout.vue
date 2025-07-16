@@ -43,7 +43,6 @@
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 300px;
-  background-color: #f0f0f0;
   padding: 1rem;
 }
 </style>
